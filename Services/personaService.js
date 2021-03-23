@@ -1,9 +1,13 @@
 // personaService.js
+/**
+Se implementa la lógica de negocios más profunda, se trabaja con los
+models y se responde a los controllers. Si fuera requerido realizar cálculos
+o transformaciones de datos, aquí sería el lugar donde sucedería. */
 
 const personaModel = require('../models/perona');
 
 module.exports = {
-	guardar: async persona => {
+	guardarUnaPersona: async persona => {
 		let id = await personaModel.guardarUnaPersona(persona);
 		persona.id = id;
 		console.log('id que trajo de model: ', id);
@@ -15,11 +19,11 @@ module.exports = {
 		let listaDePersonas = await personaModel.traerTodasLasPersonas();
 		return listaDePersonas;
 	},
-	traerUnaPersona: asyn id => {
-		let persona = await personaModel.traerUnaPersona();
+	traerUnaPersona: async id => {
+		let persona = await personaModel.traerUnaPersona(id);
 		return persona;
 	},
-	modificarPersona: async (id,mail.edad) => {
+	modificarPersona: async (id,mail,edad) => {
 		let resultado = await personaModel.modificarPersona(id,edad,mail);
 		
 		if(resultado == 1)

@@ -1,10 +1,12 @@
-//personaController.js
+// personaController.js
+// Se encarga de verificar la información que será enviada a los services.
+// Verifica que los datos obtenidos cumplan con la lógica de negocios.
 
-const personaService = require('../service/personaService');
+const personaService = require('../Service/personaService');
 
 module.exports =  {
 	guardarUnaPersona: async persona => {
-		let personaNueva = personaService.guardarUnaPersona(persona);
+		let personaNueva = await personaService.guardarUnaPersona(persona);
 		return personaNueva;
 		},
 
@@ -20,7 +22,7 @@ module.exports =  {
 
 	modificarPersona: async (id,edad,mail) => {
 		let persona = NULL;
-		let resultado = await personaController.modificarPersona(id, mail, edad);
+		let resultado = await personaService.modificarPersona(id, mail, edad);
 		
 		if(resultado)
 			persona = await persona.persona.traerUnaPersona(id);

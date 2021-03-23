@@ -1,12 +1,16 @@
 //persona.js -- models
+/**
+ * Realiza las consultas a la base de datos y devuelve la información
+ */
+const conexion = require('../db.js');
 
-module.expport = {
+module.exports = {
 	guardarUnaPersona: async persona => {
 		let resultado = await conexion.query(
-			'INSERT INT persona (nombre, apellido. nickname, edad, email) VALUES (?,?,?,?,?)',
+			'INSERT INTO persona (nombre, apellido. nickname, edad, email) VALUES (?,?,?,?,?)',
 			[persona.nombre, persona.apellido, persona.nickname, persona.edad, persona.email]);
 		
-		return resltado.insertId;
+		return result.insertId;
 	},
 	traerUnPersona: async id => {
 		let unaPersona = await conexion.query(
