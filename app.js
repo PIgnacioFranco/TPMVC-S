@@ -30,3 +30,44 @@ app.post ('/persona', async (req,res) => {
 		res.sendStatus(422).send("Se produjo el siguiente error: " + error);
 	}
 })
+
+app.get ('/persona', async (req,res) => {
+	try {
+		let listaPersonas = await personaController.listaPersonas();
+
+		res.json(listaPersonas);
+
+	} catch (error) {
+		console.log('Se produjo el siguiente error: ', error);
+		res.sendStatus(422).send("Se produjo el siguiente error: " + error);
+	}
+})
+// posteo
+app.post ('/posteos/:id', async (req,res) => {
+	try {
+		if (!req.body.nombre || !req.body.estado || !req.body.mensaje)
+			throw 'Faltan completar campos';
+
+		let persona_id = req.params.id;
+
+		let persona = await personaController.traerUnaPersona(persona_id);
+		if (persona.leght == 0)
+			throw new Error ('No existe persona');
+
+		const mensaje = req.body.mensaje;
+		
+		let mensajePosteado = await mensajeController.guardarPosteo(persona_id, mensaje);
+
+		const estado = req.body.estado;
+
+		let estadoPosteado = await mensajeController.actualizarEstado(persona_id, estado)
+		
+		res.send (persona.nombre);
+		res.send (estadoPosteado[0]);
+		res.send (mensajePosteado[0]);
+	} 
+	catch (error) {
+		console.log('Se produjo el siguiente error: ', error);
+		res.sendStatus(422).send("Se produjo el siguiente error: " + error);
+	}
+})
