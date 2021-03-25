@@ -42,6 +42,19 @@ app.get ('/persona', async (req,res) => {
 		res.sendStatus(422).send("Se produjo el siguiente error: " + error);
 	}
 })
+
+app.get ('/persona/:id', async (req,res) => {
+	try {
+		const persona_id = req.params.id;
+
+		let listaPersona = await personaController.traerUnaPersona(persona_id);
+
+		res.json (listaPersona);
+		
+	} catch (error) {
+		
+	}
+})
 // posteo
 app.post ('/posteos/:id', async (req,res) => {
 	try {
@@ -62,9 +75,7 @@ app.post ('/posteos/:id', async (req,res) => {
 
 		let estadoPosteado = await mensajeController.actualizarEstado(persona_id, estado)
 		
-		res.send (persona.nombre);
-		res.send (estadoPosteado[0]);
-		res.send (mensajePosteado[0]);
+		res.send ('Posteo correcto');
 	} 
 	catch (error) {
 		console.log('Se produjo el siguiente error: ', error);
